@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_list_and_form_test/list_arguments.dart';
 
 class ListPage extends StatelessWidget {
   @override
@@ -107,18 +108,16 @@ class MyListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(8.0),
-      children: <CustomListItem>[
-        CustomListItem(
-          title: '001',
-          body: 'bodyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-        ),
-        CustomListItem(
-          title: '002',
-          body: 'body',
-        ),
-      ],
+    final List<ListArguments> list = ModalRoute.of(context).settings.arguments;
+
+    return ListView.builder(
+      itemCount: list.length,
+      itemBuilder: (context, index) {
+        return CustomListItem(
+          title: list[index].title,
+          body: list[index].body,
+        );
+      },
     );
   }
   

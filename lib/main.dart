@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_list_and_form_test/list_arguments.dart';
 import 'package:flutter_list_and_form_test/main_model.dart';
 import 'package:provider/provider.dart';
 
@@ -76,7 +77,12 @@ class MyHomePage extends StatelessWidget {
                   child: RaisedButton(
                     child: Text('投稿する'),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/list');
+                      model.addListArguments(model.createListArguments());
+                      Navigator.pushNamed(
+                        context,
+                        '/list',
+                        arguments: model.listArguments
+                      );
                     },
                   ),
                 ),
