@@ -79,9 +79,9 @@ class MyHomePage extends StatelessWidget {
                     onPressed: () {
                       model.addListArguments(model.createListArguments());
                       Navigator.pushNamed(
-                        context,
-                        '/list',
-                        arguments: model.listArguments
+                          context,
+                          '/list',
+                          arguments: model.listArguments
                       );
                     },
                   ),

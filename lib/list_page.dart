@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_list_and_form_test/list_arguments.dart';
+import 'package:provider/provider.dart';
+
+import 'main_model.dart';
 
 class ListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('List'),
+    return ChangeNotifierProvider<MainModel>(
+      create: (_) => MainModel(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('List'),
+        ),
+        body: Consumer<MainModel>(builder: (context, model, child) {
+            return MyListWidget();
+          }
+        ),
       ),
-      body: MyListWidget(),
     );
   }
 }
