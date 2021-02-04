@@ -6,6 +6,7 @@ class MainModel extends ChangeNotifier {
   String titleText = 'タイトル';
   String bodyText = '本文';
   List<ListArguments> listArguments = [];
+  List<ListArguments> listArgumentsFirebase = [];
 
   void changeTitleText(String title) {
     titleText = title;
@@ -26,7 +27,20 @@ class MainModel extends ChangeNotifier {
     listArguments.add(object);
   }
 
-  Future fetchListArguments() {
-    final docs = Firestore.instance.collection('listArguments').getDocuments();
+  Future fetchListArguments() async {
+    final docs = await Firestore.instance.collection('listArguments').getDocuments();
+    final listArgumentsFirebase = docs.documents.map((doc) => ListArguments(doc['title'], doc['body'])).toList();
+    this.listArgumentsFirebase = listArgumentsFirebase;
+    notifyListeners();
+  }
+
+  Future addArgumentsToFirebase() async {
+    //TODO validation
+    Firestore.instance.collection('listArguments').add(
+      {
+        'title': titleText,
+        'body': bodyText,
+      },
+    );
   }
 }
