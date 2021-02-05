@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_list_and_form_test/list_arguments.dart';
+import 'package:flutter_list_and_form_test/list_page_firebase.dart';
 import 'package:flutter_list_and_form_test/main_model.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) => MyHomePage(),
         '/list': (context) => ListPage(),
+        '/list_firebase': (context) => ListPageFirebase(),
       },
       title: 'List and Form test',
       theme: ThemeData(
@@ -75,13 +77,26 @@ class MyHomePage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: RaisedButton(
-                    child: Text('投稿する'),
+                    child: Text('投稿'),
                     onPressed: () {
                       model.addListArguments(model.createListArguments());
                       Navigator.pushNamed(
-                        context,
-                        '/list',
-                        arguments: model.listArguments
+                          context,
+                          '/list',
+                          arguments: model.listArguments
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: RaisedButton(
+                    child: Text('投稿＠firebase'),
+                    onPressed: () async {
+                      await model.addArgumentsToFirebase();
+                      Navigator.pushNamed(
+                          context,
+                          '/list_firebase',
                       );
                     },
                   ),

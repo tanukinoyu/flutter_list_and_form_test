@@ -4,20 +4,14 @@ import 'package:provider/provider.dart';
 
 import 'main_model.dart';
 
-class ListPage extends StatelessWidget {
+class ListPageFirebase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<MainModel>(
-      create: (_) => MainModel(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('List'),
-        ),
-        body: Consumer<MainModel>(builder: (context, model, child) {
-            return MyListWidget();
-          }
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('List_firebase'),
       ),
+      body: MyListWidget(),
     );
   }
 }
@@ -26,7 +20,7 @@ class CustomListItem extends StatelessWidget {
   const CustomListItem({
     this.title,
     this.body,
-});
+  });
 
   final String title;
   final String body;
@@ -79,7 +73,7 @@ class _ListTileData extends StatelessWidget {
     Key key,
     this.title,
     this.body,
-}) : super(key: key);
+  }) : super(key: key);
 
   final String title;
   final String body;
@@ -98,12 +92,12 @@ class _ListTileData extends StatelessWidget {
             ),
           ),
           const Padding(
-            padding: EdgeInsets.symmetric(vertical: 2.0)
+              padding: EdgeInsets.symmetric(vertical: 2.0)
           ),
           Text(
             body,
             style: const TextStyle(
-              fontSize: 14.0
+                fontSize: 14.0
             ),
           ),
         ],
@@ -117,17 +111,24 @@ class MyListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<ListArguments> list = ModalRoute.of(context).settings.arguments;
+    return ChangeNotifierProvider<MainModel>(
+      create: (_) => MainModel()..fetchListArguments(),
+      child: Consumer<MainModel>(
+        builder: (context, model, child) {
+          final List<ListArguments> list = model.listArgumentsFirebase;
 
-    return ListView.builder(
-      itemCount: list.length,
-      itemBuilder: (context, index) {
-        return CustomListItem(
-          title: list[index].title,
-          body: list[index].body,
-        );
-      },
+          return ListView.builder(
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              return CustomListItem(
+                title: list[index].title,
+                body: list[index].body,
+              );
+            },
+          );
+        }
+      ),
     );
   }
-  
+
 }
